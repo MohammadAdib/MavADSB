@@ -6,7 +6,7 @@ Loads ADSB data into Mission Planner or QGC without a need for an ADSB receiver.
 <img width="1970" alt="image" src="https://github.com/MohammadAdib/MavADSB/assets/1324144/51630334-e4dc-4995-af77-3b710f7a382f">
 
 ### Basic usage
-Get the Jar file in out/artifacts/MavADSB_jar/ and type this into the terminal:
+Make sure to have Java installed. Get the Jar file in out/artifacts/MavADSB_jar/ and type this into the terminal:
 
 ```
 java -jar MavADSB.jar lat lon
@@ -24,7 +24,21 @@ Replace ```radius``` with the polling radius around  ```lat,lon``` (up to 250) i
 
 Replace ```interval``` with the polling interval in milliseconds (minimum 1000) in milliseconds. Optional
 
+### Mission Planner integration
+After running the Jar file, please open Mission Planner and go to config tab -> Planner and look for the "Adsb" checkbox. Enable this and restart Mission Planner
+
+<img width="550" alt="MP" src="https://github.com/MohammadAdib/MavADSB/assets/1324144/27f5d3e9-3728-4630-b12b-26d234c433ba">
+
+### QGroundControl integration
+After running the Jar file, please open QGC and click the Q on the top-left. Go into application settings and scroll to the bottom. Enable ADSB and restart QGC
+
+<img width="550" alt="image" src="https://github.com/MohammadAdib/MavADSB/assets/1324144/6b1bfb0f-f257-4f2a-b743-53be2868f460">
+
 ### API & Docs
+Install Java: https://www.java.com/en/download/
+
 ADSB-One API: https://github.com/ADSB-One/api/blob/main/README.md
 
 SBS-1 Info: http://woodair.net/SBS/Article/Barebones42_Socket_Data.htm
+
+Server runs on localhost:30003
