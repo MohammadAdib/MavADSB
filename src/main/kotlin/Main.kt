@@ -33,13 +33,13 @@ data class ADSBData(
 data class Aircraft(
     val hex: String = "",
     val type: String = "",
-    val flight: String = "",
+    private val flight: String = "",
     val r: String = "",
     val t: String = "",
     val desc: String = "Unknown",
     val ownOp: String = "",
     val year: String = "",
-    val alt_baro: String = "",
+    private val alt_baro: String = "",
     val alt_geom: Int = 0,
     val gs: Double = 0.0,
     val track: Double = 0.0,
@@ -71,5 +71,6 @@ data class Aircraft(
     val dst: Double = 0.0,
     val dir: Double = 0.0
 ) {
+    fun getFlight() = flight.trim()
     fun getAltitude() = alt_baro.toIntOrNull() ?: 0
 }

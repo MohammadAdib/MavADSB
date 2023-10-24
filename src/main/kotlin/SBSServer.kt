@@ -26,29 +26,27 @@ class SBSServer {
                     val outputStream = socket.getOutputStream()
                     val writer = PrintWriter(outputStream)
                     data.ac.forEach { ac ->
-                        if (ac.alt_baro.toIntOrNull() != null) {
-                            writer.println(
-                                createMessage(
-                                    hex = ac.hex,
-                                    flightId = ac.flight,
-                                    altitude = ac.getAltitude(),
-                                    lat = ac.lat,
-                                    lon = ac.lon,
-                                    squawk = ac.squawk
-                                )
+                        writer.println(
+                            createMessage(
+                                hex = ac.hex,
+                                flightId = ac.getFlight(),
+                                altitude = ac.getAltitude(),
+                                lat = ac.lat,
+                                lon = ac.lon,
+                                squawk = ac.squawk
                             )
-                            writer.println(
-                                createMessage(
-                                    transmissionType = 4,
-                                    hex = ac.hex,
-                                    flightId = ac.flight,
-                                    groundSpeed = ac.gs,
-                                    track = ac.track,
-                                    squawk = ac.squawk
-                                )
+                        )
+                        writer.println(
+                            createMessage(
+                                transmissionType = 4,
+                                hex = ac.hex,
+                                flightId = ac.getFlight(),
+                                groundSpeed = ac.gs,
+                                track = ac.track,
+                                squawk = ac.squawk
                             )
-                            writer.flush()
-                        }
+                        )
+                        writer.flush()
                     }
                 } catch (e: Exception) {
                     // we don't care
