@@ -45,6 +45,7 @@ Server runs on localhost:30003
 
 ### Traditional methods
 GCS connected USB dongle: https://uavionix.com/products/pingusb/
+
 UAS connected ADSB rx: https://uavionix.com/products/pingrx-pro/
 
 It is still recommended to use the above, however not available this software should suffice. Enjoy :)
