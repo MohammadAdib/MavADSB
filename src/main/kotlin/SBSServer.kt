@@ -1,3 +1,4 @@
+import java.io.IOException
 import java.io.PrintWriter
 import java.net.ServerSocket
 import java.net.Socket
@@ -6,24 +7,26 @@ import java.util.*
 
 class SBSServer {
 
-    private val clients = mutableListOf<Socket>()
+    val clients = mutableListOf<Socket>()
 
     fun start() {
         val serverSocket = ServerSocket(30003)
         Thread {
             while (true) {
-                clients.add(serverSocket.accept())
+                clients.add(serverSocket.accept()); println("Client connected")
             }
         }.start()
     }
 
     fun sendData(data: ADSBData) {
         Thread {
-            clients.forEach { socket ->
+            val iterator = clients.iterator()
+            while (iterator.hasNext()) {
+                val socket = iterator.next()
                 try {
                     val outputStream = socket.getOutputStream()
                     val writer = PrintWriter(outputStream)
-                    data.ac.forEach { ac ->
+                    data.ac.filter { it.getAltitude() > 0 }.forEach { ac ->
                         writer.println(
                             createMessage(
                                 hex = ac.hex,
@@ -46,7 +49,10 @@ class SBSServer {
                         )
                         writer.flush()
                     }
-                } catch (_: Exception) {
+                } catch (e: IOException) {
+                    socket.close()
+                    iterator.remove()
+                    println("Client disconnected")
                 }
             }
         }.start()
@@ -87,8 +93,8 @@ class SBSServer {
         builder.append("${altitude},")
         builder.append("${groundSpeed},")
         builder.append("${track},")
-        builder.append("${formatCoordinate(lat)},")
-        builder.append("${formatCoordinate(lon)},")
+        builder.append("${String.format("%.5f", lat)},")
+        builder.append("${String.format("%.5f", lon)},")
         builder.append(",") // vertical rate
         builder.append("${squawk},")
         builder.append(",") // alert
@@ -104,8 +110,4 @@ class SBSServer {
     private fun getDate() = SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().time)
 
     private fun getTime() = SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().time)
-
-    private fun formatCoordinate(coordinate: Double): String {
-        return String.format("%.5f", coordinate)
-    }
 }
