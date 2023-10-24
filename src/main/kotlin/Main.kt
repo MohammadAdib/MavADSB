@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
     val lat = args[0]
     val lon = args[1]
     if (args.size > 2) radius = 250.coerceAtMost((args[2].toIntOrNull() ?: radius))
-    if (args.size > 3) polling_delay = args[3].toLongOrNull() ?: polling_delay
+    if (args.size > 3) polling_delay = 1000L.coerceAtLeast(args[3].toLongOrNull() ?: polling_delay)
     println("Querying ADSB ${radius}nm around ($lat, $lon) every ${polling_delay}ms")
     server.start()
     val client = OkHttpClient()
