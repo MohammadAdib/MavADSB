@@ -1,5 +1,7 @@
 # MavADSB
-Loads ADSB data into Mission Planner or QGC without a need for an ADSB receiver. This data can be forwarded to the UAS (via telemetry link) for collision avoidance without the need for an onboard ADSB-in receiver or any additional hardware.
+Loads ADSB data into Mission Planner or QGC without a need for an ADSB receiver. This data can be forwarded to the UAS (via telemetry link) for collision avoidance without the need for an onboard ADSB-in receiver or any additional hardware. Works on Mac, Linux or Windows.
+
+<img width="1970" alt="image" src="https://github.com/MohammadAdib/MavADSB/assets/1324144/97b7e787-d24d-4bae-881f-30ecf718c9c8">
 
 <img width="1970" alt="image" src="https://github.com/MohammadAdib/MavADSB/assets/1324144/51630334-e4dc-4995-af77-3b710f7a382f">
 
