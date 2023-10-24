@@ -5,7 +5,7 @@ Loads ADSB data into Mission Planner or QGC without a need for an ADSB receiver.
 
 <img width="1970" alt="image" src="https://github.com/MohammadAdib/MavADSB/assets/1324144/51630334-e4dc-4995-af77-3b710f7a382f">
 
-### How to use
+### Basic usage
 Get the Jar file in out/artifacts/MavADSB_jar/ and type this into the terminal:
 
 ```
@@ -13,6 +13,16 @@ java -jar MavADSB.jar lat lon
 ```
 
 Replace ```lat``` and ```lon``` with your location, and it will display all ADSB data within 250nm
+
+
+### Advanced usage
+```
+java -jar MavADSB.jar lat lon radius interval
+```
+
+Replace ```radius``` with the polling radius around  ```lat,lon``` (up to 250) in nautical miles. Optional
+
+Replace ```interval``` with the polling interval in milliseconds (minimum 1000) in milliseconds. Optional
 
 ### API & Docs
 ADSB-One API: https://github.com/ADSB-One/api/blob/main/README.md
