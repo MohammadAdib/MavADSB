@@ -12,8 +12,7 @@ class SBSServer {
         val serverSocket = ServerSocket(30003)
         Thread {
             while (true) {
-                val socket = serverSocket.accept()
-                clients.add(socket)
+                clients.add(serverSocket.accept())
             }
         }.start()
     }
@@ -26,23 +25,26 @@ class SBSServer {
                 try {
                     val outputStream = socket.getOutputStream()
                     val writer = PrintWriter(outputStream)
-                    data.ac.forEachIndexed { id, ac ->
+                    data.ac.forEach { ac ->
                         if (ac.alt_baro.toIntOrNull() != null) {
                             writer.println(
                                 createMessage(
-                                    "MSG",
-                                    3,
-                                    5,
-                                    0,
-                                    ac.hex,
-                                    ac.flight,
-                                    ac.flight,
-                                    ac.getAltitude(),
-                                    ac.gs,
-                                    ac.track,
-                                    ac.lat,
-                                    ac.lon,
-                                    ac.squawk
+                                    hex = ac.hex,
+                                    flightId = ac.flight,
+                                    altitude = ac.getAltitude(),
+                                    lat = ac.lat,
+                                    lon = ac.lon,
+                                    squawk = ac.squawk
+                                )
+                            )
+                            writer.println(
+                                createMessage(
+                                    transmissionType = 4,
+                                    hex = ac.hex,
+                                    flightId = ac.flight,
+                                    groundSpeed = ac.gs,
+                                    track = ac.track,
+                                    squawk = ac.squawk
                                 )
                             )
                             writer.flush()
@@ -66,13 +68,12 @@ class SBSServer {
         aircraftId: Int = 0,
         hex: String = "",
         flightId: String = "",
-        callSign: String = "",
-        altitude: Int,
-        groundSpeed: Double,
-        track: Double,
-        lat: Double,
-        lon: Double,
-        squawk: String
+        altitude: Int = 0,
+        groundSpeed: Double = 0.0,
+        track: Double = 0.0,
+        lat: Double = 0.0,
+        lon: Double = 0.0,
+        squawk: String = ""
     ): String {
         val builder = StringBuilder()
         // The below basic data fields are standard for all messages (Field 2 used only for MSG)
@@ -87,7 +88,7 @@ class SBSServer {
         builder.append("${getDate()},")
         builder.append("${getTime()},")
         // The fields below contain specific aircraft information
-        builder.append("${callSign},")
+        builder.append("${flightId},")
         builder.append("${altitude},")
         builder.append("${groundSpeed},")
         builder.append("${track},")
