@@ -79,7 +79,7 @@ class SBSServer {
         builder.append("$transmissionType,")
         builder.append("$sessionId,")
         builder.append("$aircraftId,")
-        builder.append("$hex,")
+        builder.append("${hex.uppercase(Locale.getDefault())},")
         builder.append("$flightId,")
         builder.append("${getDate()},")
         builder.append("${getTime()},")

@@ -71,6 +71,6 @@ data class Aircraft(
     val dst: Double = 0.0,
     val dir: Double = 0.0
 ) {
-    fun getFlight() = flight.trim()
+    fun getFlight() = flight.trim().uppercase(Locale.getDefault())
     fun getAltitude() = alt_baro.toIntOrNull() ?: 0
 }
