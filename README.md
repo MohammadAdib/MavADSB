@@ -42,3 +42,9 @@ ADSB-One API: https://github.com/ADSB-One/api/blob/main/README.md
 SBS-1 Info: http://woodair.net/SBS/Article/Barebones42_Socket_Data.htm
 
 Server runs on localhost:30003
+
+### Traditional methods
+GCS connected USB dongle: https://uavionix.com/products/pingusb/
+UAS connected ADSB rx: https://uavionix.com/products/pingrx-pro/
+
+It is still recommended to use the above, however not available this software should suffice. Enjoy :)
