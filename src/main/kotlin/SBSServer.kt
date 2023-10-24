@@ -19,9 +19,7 @@ class SBSServer {
 
     fun sendData(data: ADSBData) {
         Thread {
-            val iterator = clients.iterator()
-            while (iterator.hasNext()) {
-                val socket = iterator.next()
+            clients.forEach { socket ->
                 try {
                     val outputStream = socket.getOutputStream()
                     val writer = PrintWriter(outputStream)
@@ -48,8 +46,7 @@ class SBSServer {
                         )
                         writer.flush()
                     }
-                } catch (e: Exception) {
-                    // we don't care
+                } catch (_: Exception) {
                 }
             }
         }.start()
