@@ -48,4 +48,4 @@ GCS connected USB dongle: https://uavionix.com/products/pingusb/
 
 UAS connected ADSB rx: https://uavionix.com/products/pingrx-pro/
 
-It is still recommended to use the above, however when not available this software should suffice. Enjoy :)
+It is still recommended to use the above for least latency. However paired with this software the range is greatly extended. Enjoy :)
