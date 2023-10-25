@@ -17,12 +17,14 @@ Replace ```lat``` and ```lon``` with your location, and it will display all ADSB
 
 ### Advanced usage
 ```
-java -jar MavADSB.jar lat lon radius interval
+java -jar MavADSB.jar [-q] lat lon radius interval
 ```
 
 Replace ```radius``` with the polling radius around  ```lat,lon``` (up to 250) in nautical miles. Optional
 
 Replace ```interval``` with the polling interval in milliseconds (minimum 1000) in milliseconds. Optional
+
+Include ```-q``` (dash lower case letter Q) anywhere on the command line to suppress most messages. Optional
 
 ### Mission Planner integration
 After running the Jar file, please open Mission Planner and go to config tab -> Planner and look for the "Adsb" checkbox. Enable this and restart Mission Planner

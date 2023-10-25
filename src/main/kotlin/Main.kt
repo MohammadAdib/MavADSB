@@ -7,12 +7,15 @@ private const val BASE_URL = "https://api.adsb.one/v2/"
 private val server: SBSServer = SBSServer()
 private var radius = 250
 private var polling_delay = 1000L
+private var quiet = false
 
 fun main(args: Array<String>) {
-    val lat = args[0]
-    val lon = args[1]
-    if (args.size > 2) radius = 250.coerceAtMost((args[2].toIntOrNull() ?: radius))
-    if (args.size > 3) polling_delay = 1000L.coerceAtLeast(args[3].toLongOrNull() ?: polling_delay)
+    val positional_args = args.dropWhile { it == "-q" }.toTypedArray()
+    (positional_args.size < args.size).also { quiet = it }
+    val lat = positional_args[0]
+    val lon = positional_args[1]
+    if (positional_args.size > 2) radius = 250.coerceAtMost((positional_args[2].toIntOrNull() ?: radius))
+    if (positional_args.size > 3) polling_delay = 1000L.coerceAtLeast(positional_args[3].toLongOrNull() ?: polling_delay)
     println("Querying ADSB ${radius}nm around ($lat, $lon) every ${polling_delay}ms")
     server.start()
     val client = OkHttpClient()
@@ -20,9 +23,9 @@ fun main(args: Array<String>) {
     Timer().schedule(object : TimerTask() {
         override fun run() {
             try {
-                if (server.clients.isNotEmpty()) client.newCall(request).execute().body?.let { server.sendData(Gson().fromJson(it.string(), ADSBData::class.java)) }
+                if (server.clients.isNotEmpty()) client.newCall(request).execute().body?.let { server.sendData(Gson().fromJson(it.string(), ADSBData::class.java), quiet) }
             } catch (e: Exception) {
-                println("Failed to query ADSB data: ${e.message}")
+                if (!quiet) println("Failed to query ADSB data: ${e.message}")
             }
         }
     }, 0, polling_delay)

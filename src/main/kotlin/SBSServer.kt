@@ -18,7 +18,7 @@ class SBSServer {
         }.start()
     }
 
-    fun sendData(data: ADSBData) {
+    fun sendData(data: ADSBData, quiet: Boolean) {
         Thread {
             val iterator = clients.iterator()
             while (iterator.hasNext()) {
@@ -34,7 +34,8 @@ class SBSServer {
                                 altitude = ac.getAltitude(),
                                 lat = ac.lat,
                                 lon = ac.lon,
-                                squawk = ac.squawk
+                                squawk = ac.squawk,
+                                quiet = quiet
                             )
                         )
                         writer.println(
@@ -44,7 +45,8 @@ class SBSServer {
                                 flightId = ac.getFlight(),
                                 groundSpeed = ac.gs,
                                 track = ac.track,
-                                squawk = ac.squawk
+                                squawk = ac.squawk,
+                                quiet = quiet
                             )
                         )
                         writer.flush()
@@ -74,7 +76,8 @@ class SBSServer {
         track: Double = 0.0,
         lat: Double = 0.0,
         lon: Double = 0.0,
-        squawk: String = ""
+        squawk: String = "",
+        quiet: Boolean = false
     ): String {
         val builder = StringBuilder()
         // The below basic data fields are standard for all messages (Field 2 used only for MSG)
@@ -103,7 +106,7 @@ class SBSServer {
         builder.append("0") // isOnGround
 
         val message = builder.toString()
-        println(message)
+        if (!quiet) println(message)
         return message
     }
 
